@@ -14,15 +14,6 @@
     <name>My own hash map impl</name>
     <description>Implementation of my own hash map for test purposes</description>
 
-    <dependencies>
-        <!-- Spock -->
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -40,6 +31,7 @@
             <plugin>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <configuration>
