@@ -34,8 +34,8 @@ class PHashMapTest extends Specification {
         PHashMap<String, String> testMap = new PHashMap<>()
         def key1 = 'key1'
         def key2 = 'key2'
-        def key1BucketNumber = key1.hashCode() % 16
-        def key2BucketNumber = key2.hashCode() % 16
+        def key1BucketNumber = key1.hashCode() % testMap.INITIAL_CAPACITY
+        def key2BucketNumber = key2.hashCode() % testMap.INITIAL_CAPACITY
 
         when:
         testMap.put(key1, 'value1')
