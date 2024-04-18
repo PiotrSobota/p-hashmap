@@ -31,6 +31,7 @@
             <plugin>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <configuration>
