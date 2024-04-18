@@ -12,11 +12,11 @@ public class PHashMap<K, V> {
     private int size;
 
     public PHashMap() {
-        buckets = new ArrayList[INITIAL_CAPACITY];
+        this.buckets = new ArrayList[INITIAL_CAPACITY];
         for (int i = 0; i < INITIAL_CAPACITY; i++) {
-            buckets[i] = new ArrayList<>();
+            this.buckets[i] = new ArrayList<>();
         }
-        size = 0;
+        this.size = 0;
     }
 
     public void put(K key, V value) {
@@ -24,7 +24,7 @@ public class PHashMap<K, V> {
             throw new IllegalArgumentException("Key cannot be null");
         }
 
-        ArrayList<Entry<K, V>> bucket = buckets[getBucketIndex(key)];
+        ArrayList<Entry<K, V>> bucket = this.buckets[getBucketIndex(key)];
         for (Entry<K, V> entry : bucket) {
             if (entry.key.equals(key)) {
                 entry.value = value;
@@ -32,15 +32,15 @@ public class PHashMap<K, V> {
             }
         }
         bucket.add(new Entry<>(key, value));
-        size++;
+        this.size++;
 
-        if ((double) size / buckets.length >= LOAD_FACTOR) {
+        if ((double) this.size / this.buckets.length >= LOAD_FACTOR) {
             resize();
         }
     }
 
     public V get(K key) {
-        ArrayList<Entry<K, V>> bucket = buckets[getBucketIndex(key)];
+        ArrayList<Entry<K, V>> bucket = this.buckets[getBucketIndex(key)];
         for (Entry<K, V> entry : bucket) {
             if (entry.key.equals(key)) {
                 return entry.value;
@@ -50,9 +50,9 @@ public class PHashMap<K, V> {
     }
 
     public void remove(K key) {
-        ArrayList<Entry<K, V>> bucket = buckets[getBucketIndex(key)];
+        ArrayList<Entry<K, V>> bucket = this.buckets[getBucketIndex(key)];
         bucket.removeIf(entry -> entry.key.equals(key));
-        size--;
+        this.size--;
     }
 
     public int size() {
@@ -60,16 +60,16 @@ public class PHashMap<K, V> {
     }
 
     private int getBucketIndex(K key) {
-        return Math.abs(key.hashCode()) % buckets.length;
+        return Math.abs(key.hashCode()) % this.buckets.length;
     }
 
     private void resize() {
-        ArrayList<Entry<K, V>>[] oldBuckets = buckets;
-        buckets = new ArrayList[2 * oldBuckets.length];
-        for (int i = 0; i < buckets.length; i++) {
-            buckets[i] = new ArrayList<>();
+        ArrayList<Entry<K, V>>[] oldBuckets = this.buckets;
+        this.buckets = new ArrayList[2 * oldBuckets.length];
+        for (int i = 0; i < this.buckets.length; i++) {
+            this.buckets[i] = new ArrayList<>();
         }
-        size = 0;
+        this.size = 0;
         for (ArrayList<Entry<K, V>> bucket : oldBuckets) {
             for (Entry<K, V> entry : bucket) {
                 put(entry.key, entry.value);
