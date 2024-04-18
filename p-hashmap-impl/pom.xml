@@ -14,15 +14,6 @@
     <name>My own hash map impl</name>
     <description>Implementation of my own hash map for test purposes</description>
 
-    <dependencies>
-        <!-- Spock -->
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
