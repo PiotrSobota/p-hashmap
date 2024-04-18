@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.test</groupId>
+        <artifactId>p-hashmap</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>p-hashmap-impl</artifactId>
+    <packaging>jar</packaging>
+
+    <name>My own hash map impl</name>
+    <description>Implementation of my own hash map for test purposes</description>
+
+    <dependencies>
+        <!-- Spock -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/src/test/groovy</source>
+                            </sources>
+                        </configuration>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
