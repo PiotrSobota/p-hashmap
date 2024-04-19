@@ -1,6 +1,8 @@
 package com.test.structure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class PHashMap<K, V> {
 
@@ -8,7 +10,7 @@ public class PHashMap<K, V> {
     private static final int INITIAL_CAPACITY = 16;
     // When load of buckets list will be grater or equal to specified LOAD_FACTOR, resizing process will occur
     private static final double LOAD_FACTOR = 0.75;
-    private ArrayList[] buckets;
+    private ArrayList<Entry<K, V>>[] buckets;
     private int size;
 
     public PHashMap() {
@@ -40,18 +42,15 @@ public class PHashMap<K, V> {
     }
 
     public V get(K key) {
-        ArrayList<Entry<K, V>> bucket = this.buckets[getBucketIndex(key)];
-        for (Entry<K, V> entry : bucket) {
-            if (entry.key.equals(key)) {
-                return entry.value;
-            }
-        }
-        return null;
+        return this.buckets[getBucketIndex(key)].stream()
+                .filter(entry -> entry.key.equals(key))
+                .findFirst()
+                .map(entry -> entry.value)
+                .orElse(null);
     }
 
     public void remove(K key) {
-        ArrayList<Entry<K, V>> bucket = this.buckets[getBucketIndex(key)];
-        bucket.removeIf(entry -> entry.key.equals(key));
+        this.buckets[getBucketIndex(key)].removeIf(entry -> entry.key.equals(key));
         this.size--;
     }
 
@@ -70,14 +69,14 @@ public class PHashMap<K, V> {
             this.buckets[i] = new ArrayList<>();
         }
         this.size = 0;
-        for (ArrayList<Entry<K, V>> bucket : oldBuckets) {
-            for (Entry<K, V> entry : bucket) {
-                put(entry.key, entry.value);
-            }
-        }
+
+        Arrays.stream(oldBuckets)
+                .flatMap(Collection::stream)
+                .forEach(entry -> put(entry.key, entry.value));
     }
 
     private static class Entry<K, V> {
+
         K key;
         V value;
 
