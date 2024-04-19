@@ -16,20 +16,41 @@ class PHashMapTest extends Specification {
         def key2 = 'key2'
         def key1BucketNumber = key1.hashCode() % testMap.INITIAL_CAPACITY
         def key2BucketNumber = key2.hashCode() % testMap.INITIAL_CAPACITY
-        testMap.buckets[key1BucketNumber].add(new PHashMap.Entry<String, String>('key1', 'value1'))
-        testMap.buckets[key2BucketNumber].add(new PHashMap.Entry<String, String>('key2', 'value2'))
+        testMap.buckets[key1BucketNumber].add(new PHashMap.Entry<String, String>(key1, 'value1'))
+        testMap.buckets[key2BucketNumber].add(new PHashMap.Entry<String, String>(key2, 'value2'))
         testMap.size = 2
 
         when:
-        def result1 = testMap.get('key1')
-        def result2 = testMap.get('key2')
+        def result1 = testMap.get(key1)
+        def result2 = testMap.get(key2)
 
         then:
         result1 == 'value1'
         result2 == 'value2'
     }
 
-    def 'should put new item to map & overwrite if exists'() {
+    def 'should get correct value for 2 entries with same hashcode of key'() {
+        given:
+        PHashMap<String, String> testMap = new PHashMap<>()
+        def key1 = 'Ea'
+        def key2 = 'FB'
+        def key1BucketNumber = key1.hashCode() % testMap.INITIAL_CAPACITY
+        def key2BucketNumber = key2.hashCode() % testMap.INITIAL_CAPACITY
+        testMap.buckets[key1BucketNumber].add(new PHashMap.Entry<String, String>(key1, 'value1'))
+        testMap.buckets[key2BucketNumber].add(new PHashMap.Entry<String, String>(key2, 'value2'))
+        testMap.size = 2
+
+        when:
+        def result1 = testMap.get(key1)
+        def result2 = testMap.get(key2)
+
+        then:
+        key1.hashCode() == key2.hashCode()
+        result1 == 'value1'
+        result2 == 'value2'
+    }
+
+    def 'should put new items to map & overwrite if exists'() {
         given:
         PHashMap<String, String> testMap = new PHashMap<>()
         def key1 = 'key1'
@@ -46,6 +67,25 @@ class PHashMapTest extends Specification {
         testMap.size == 2
         testMap.buckets[key1BucketNumber].get(0).value == 'value3'
         testMap.buckets[key2BucketNumber].get(0).value == 'value2'
+    }
+
+    def 'should put new item to map even if hashcode of key is the same'() {
+        given:
+        PHashMap<String, String> testMap = new PHashMap<>()
+        def key1 = 'Ea'
+        def key2 = 'FB'
+        def key1BucketNumber = key1.hashCode() % testMap.INITIAL_CAPACITY
+        def key2BucketNumber = key2.hashCode() % testMap.INITIAL_CAPACITY
+
+        when:
+        testMap.put(key1, 'value1')
+        testMap.put(key2, 'value2')
+
+        then:
+        key1.hashCode() == key2.hashCode()
+        testMap.size == 2
+        testMap.buckets[key1BucketNumber].get(0).value == 'value1'
+        testMap.buckets[key2BucketNumber].get(1).value == 'value2'
     }
 
     def 'should remove item from map'() {
