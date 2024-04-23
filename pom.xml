@@ -28,6 +28,12 @@
             <groupId>org.spockframework</groupId>
             <version>2.2-M2-groovy-3.0</version>
         </dependency>
+        <dependency>
+            <artifactId>commons-collections4</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <scope>compile</scope>
+            <version>4.4</version>
+        </dependency>
     </dependencies>
 
     <build>

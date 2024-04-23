@@ -1,5 +1,6 @@
 package com.test.structure
 
+import org.apache.commons.collections4.list.TreeList
 import spock.lang.Specification
 
 class PerformanceTest extends Specification {
@@ -128,7 +129,7 @@ class PerformanceTest extends Specification {
     }
 
     private static List<String> generateRandomKeys(int numberOfKeys) {
-        List<String> randomKeys = new ArrayList<>()
+        List<String> randomKeys = new TreeList<>()
         for (i in 0..<numberOfKeys) {
             randomKeys.add(UUID.randomUUID().toString())
         }
